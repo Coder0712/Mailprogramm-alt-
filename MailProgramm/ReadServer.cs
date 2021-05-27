@@ -36,8 +36,8 @@ namespace MailProgramm
             imapClient.Authenticate(Verifizierung.Username, Verifizierung.Password);
         }
 
-        // Auf diese Funktion muss verwiesen werden im Thread
-        ppublic static List<KeyVal<string, string>> ReadAndSaveMessages()
+
+        public static List<KeyVal<string, string>> ReadAndSaveMessages()
         {
 
             imapClient.Inbox.Open(FolderAccess.ReadOnly);
