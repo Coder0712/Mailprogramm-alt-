@@ -12,12 +12,15 @@ namespace MailProgramm
 {
     public partial class Uebersicht : Form
     {
-        // list for subjects
-        private List<string> subjects = new List<string>();
+        // list for subjects and dates
+        private List<KeyVal<string, string>> subjects = new List<KeyVal<string, string>>();
+        private List<string> dates = new List<string>();
 
         private string subjectMails = null;
 
         Label subjectLabel;
+        Panel subjectDatePanel;
+        Label subjectDateLabel;
 
         // x and y cooradinate for label
         private int x = 0;
@@ -36,39 +39,59 @@ namespace MailProgramm
             x = 20;
             y = 20;
 
-            foreach (string subject in subjects)
+            foreach (KeyVal<string, string> subject in subjects)
             {
                 // counter for label name
 
 
                 // positions for first label
 
+                subjectDatePanel = new Panel();
+
+                subjectDateLabel = new Label();
 
                 subjectLabel = new Label();
 
+                // date for panel
+                subjectDatePanel.Name = Convert.ToString(i);
+                subjectDatePanel.Height = 17;
+                subjectDatePanel.Width = 650;
+
+                // data for subjectlabel
                 subjectLabel.Name = Convert.ToString(i);
-                subjectLabel.Height = 17;
-                subjectLabel.Width = 550;
+                subjectLabel.Height = 16;
+                subjectLabel.Width = 400;
+                subjectLabel.Location = new Point(0, 0);
 
+                subjectDateLabel.Name = Convert.ToString(i);
+                subjectDateLabel.Height = 16;
+                subjectDateLabel.Width = 100;
+                subjectDateLabel.Location = new Point(410,0);
 
-                if (subjectLabel.Name == Convert.ToString(i))
+                if (subjectDatePanel.Name == Convert.ToString(i))
                 {
-                    subjectLabel.Text = subject;
-                    subjectMails = subject;
+                    subjectLabel.Text = subject.id;
+                    subjectMails = subject.id;
+                    subjectDateLabel.Text = subject.value;
+
+                    subjectDatePanel.Controls.Add(subjectLabel);
+                    subjectDatePanel.Controls.Add(subjectDateLabel);
+
                 }
 
-                if (subjectLabel.Name == "0")
+                if (subjectDatePanel.Name == "0")
                 {
-                    subjectLabel.Location = new Point(x, y);
+                    subjectDatePanel.Location = new Point(x, y);
                 }
 
                 if (i > 0)
                 {
                     y = y + 20;
-                    subjectLabel.Location = new Point(x, y);
+                    subjectDatePanel.Location = new Point(x, y);
                 }
 
-                pnlSubjects.Controls.Add(subjectLabel);
+
+                pnlSubjects.Controls.Add(subjectDatePanel);
 
 
                 subjectLabel.Click += new EventHandler(subjectLabel_Click);
