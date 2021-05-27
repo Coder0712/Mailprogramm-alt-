@@ -19,9 +19,15 @@ namespace MailProgramm
         private static int port = 993;
         private static bool ssl = true;
         private static List<MimeMessage> list = new List<MimeMessage>();
-        private static List<string> subjects = new List<string>();
+
+        // to pair subject and date from one mail
+        private static List<KeyVal<string, string>> subjectsDates = new List<KeyVal<string, string>>();
+
+        private static KeyVal<string, string> subjectDate;
 
         internal static ImapClient imapClient = new ImapClient();
+
+        private static int i = 0;
 
         public static void Connection()
         {
@@ -30,9 +36,8 @@ namespace MailProgramm
             imapClient.Authenticate(Verifizierung.Username, Verifizierung.Password);
         }
 
-
         // Auf diese Funktion muss verwiesen werden im Thread
-        public static List<string> ReadAndSaveMessages()
+        ppublic static List<KeyVal<string, string>> ReadAndSaveMessages()
         {
 
             imapClient.Inbox.Open(FolderAccess.ReadOnly);
@@ -44,7 +49,16 @@ namespace MailProgramm
 
             foreach (MimeMessage mail in list)
             {
-                subjects.Add(mail.Subject);
+               
+                subjectDate = new KeyVal<string, string>();
+
+                subjectDate.Name = Convert.ToString(i);
+                subjectDate.id = mail.Subject;
+                subjectDate.value = CutString(Convert.ToString(mail.Date));
+
+                subjectsDates.Add(subjectDate);
+
+                ++i;
 
             }
 
@@ -53,7 +67,7 @@ namespace MailProgramm
 
             // Öffnen der Dateil und lesen
 
-            return subjects;
+            return subjectsDates;
         }
 
         /// <summary>
@@ -137,6 +151,13 @@ namespace MailProgramm
 
                 ++i;
             }
+        }
+
+        private static string CutString(string dateString)
+        {
+            string newDateString = dateString.Substring(0, 11);
+
+            return newDateString; 
         }
     }
 }
