@@ -31,7 +31,7 @@ namespace MailProgramm
         }
         
 
-        // Auf diese Funktion muss verwiesen werden im Thread
+        
         public static List<string> ReadAndSaveMessages()
         {
             /*
