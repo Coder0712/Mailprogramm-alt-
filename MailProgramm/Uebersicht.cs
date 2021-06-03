@@ -36,8 +36,8 @@ namespace MailProgramm
             subjects = ReadServer.ReadAndSaveMessages();
 
             int i = 0;
-            x = 20;
-            y = 20;
+            x = 10;
+            y = 10;
 
             foreach (KeyVal<string, string> subject in subjects)
             {
@@ -54,7 +54,7 @@ namespace MailProgramm
 
                 // date for panel
                 subjectDatePanel.Name = Convert.ToString(i);
-                subjectDatePanel.Height = 17;
+                subjectDatePanel.Height = 30;
                 subjectDatePanel.Width = 650;
 
                 // data for subjectlabel
@@ -86,7 +86,7 @@ namespace MailProgramm
 
                 if (i > 0)
                 {
-                    y = y + 20;
+                    y = y + 40;
                     subjectDatePanel.Location = new Point(x, y);
                 }
 
@@ -94,7 +94,7 @@ namespace MailProgramm
                 pnlSubjects.Controls.Add(subjectDatePanel);
 
 
-                subjectLabel.Click += new EventHandler(subjectLabel_Click);
+                subjectDatePanel.Click += new EventHandler(subjectLabel_Click);
 
                 ++i;
 
@@ -126,8 +126,21 @@ namespace MailProgramm
         {
             BuildMessage message = new BuildMessage();
 
-            Label lbl = sender as Label;
-            message.Subject = lbl.Text;
+            Panel pnl = sender as Panel;
+            
+            // point of the subject text field
+            Point pointSubejct = new Point(0, 0);
+
+            //point of the date text field
+            Point pointDate = new Point(410, 0);
+
+            Control subjectInPanel = pnl.GetChildAtPoint(pointSubejct);
+            Control dateInPanel = pnl.GetChildAtPoint(pointDate);
+
+            message.Subject = subjectInPanel.Text;
+            string date = dateInPanel.Text;
+
+            message.Date = date.Substring(0, date.Length - 1);
 
             message.LoadMailData();
 
