@@ -15,6 +15,7 @@ namespace MailProgramm
         MailPropertiesForJson mailWithProperties = new MailPropertiesForJson();
 
         public string Subject{ get; set;}
+        public string Date { get; set; }
 
         /// <summary>
         /// Baut eine Form mit Controls zusammen, um den Inhalt der mail anzuzeigen. 
@@ -145,7 +146,7 @@ namespace MailProgramm
                     string json = sr.ReadToEnd();
 
 
-                    if (json.Contains(Subject))
+                    if (json.Contains(Subject) & json.Contains(Date))
                     {
                          mailWithProperties = JsonConvert.DeserializeObject<MailPropertiesForJson>(json);
                     }
