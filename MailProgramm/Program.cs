@@ -14,7 +14,7 @@ namespace MailProgramm
     {
         //ist eine Forms Anwendung
         // Hier wird nur die Anwendung gestartet
-
+        [STAThread]
         static void Main(string[] args)
         {
             Application.EnableVisualStyles();
